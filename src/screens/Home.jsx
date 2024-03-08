@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
 import TodayDate from "../component/TodayDate";
 import CalendarMain from "../calendar/CalendarMain";
-import {
-  activeDateCalendarAction,
-  calendarDataAction,
-  todaysDateAction,
-} from "../store";
+import { activeDateCalendarAction, todaysDateAction } from "../store";
 import { useDispatch } from "react-redux";
-import initialdata from "../data/2080-calendar.json";
+
 import EventComponent from "../component/EventComponent";
 import AddCoustomEvent from "../component/AddCoustomEvent";
 
@@ -21,8 +17,6 @@ const Home = () => {
 
     dispatch(todaysDateAction.setTodaysDate(nepalidate));
 
-    dispatch(calendarDataAction.setCalendarData(initialdata));
-
     dispatch(
       activeDateCalendarAction.setActiveDateCalendar([
         nepalidate.month,
@@ -35,7 +29,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="mx-12 flex">
+      <div className="mx-12 flex ">
         <div className="w-[30%] border-2">
           <TodayDate />
           <EventComponent />

@@ -2,15 +2,8 @@ import React from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { activeDateCalendarAction, calendarDataAction } from "../store";
-import d2075 from "../data/2075-calendar.json";
-import d2076 from "../data/2076-calendar.json";
-import d2077 from "../data/2077-calendar.json";
-import d2078 from "../data/2078-calendar.json";
-import d2079 from "../data/2079-calendar.json";
-import d2080 from "../data/2080-calendar.json";
-import d2081 from "../data/2081-calendar.json";
-import d2082 from "../data/2082-calendar.json";
+import { activeDateCalendarAction } from "../store";
+
 import { constMonths } from "../constants/months";
 import { nepaliYears } from "../constants/nepaliYears";
 
@@ -22,16 +15,7 @@ const CalendarHeading = () => {
     return <></>;
   }
   // year change calculation
-  const yearchanged = (newyear) => {
-    newyear === 2075 && dispatch(calendarDataAction.setCalendarData(d2075));
-    newyear === 2076 && dispatch(calendarDataAction.setCalendarData(d2076));
-    newyear === 2077 && dispatch(calendarDataAction.setCalendarData(d2077));
-    newyear === 2078 && dispatch(calendarDataAction.setCalendarData(d2078));
-    newyear === 2079 && dispatch(calendarDataAction.setCalendarData(d2079));
-    newyear === 2080 && dispatch(calendarDataAction.setCalendarData(d2080));
-    newyear === 2081 && dispatch(calendarDataAction.setCalendarData(d2081));
-    newyear === 2082 && dispatch(calendarDataAction.setCalendarData(d2082));
-  };
+
   // year change calculation end
 
   const dispatch = useDispatch();
@@ -48,7 +32,6 @@ const CalendarHeading = () => {
       if (month === 12) {
         newmonth = 1;
         newyear = year + 1;
-        yearchanged(newyear);
         dispatch(
           activeDateCalendarAction.setActiveDateCalendar([newmonth, newyear])
         );
@@ -70,7 +53,6 @@ const CalendarHeading = () => {
       if (month === 1) {
         newmonth = 12;
         newyear = year - 1;
-        yearchanged(newyear);
         dispatch(
           activeDateCalendarAction.setActiveDateCalendar([newmonth, newyear])
         );
@@ -94,8 +76,7 @@ const CalendarHeading = () => {
 
   const handelYearChange = (event) => {
     let newYear = Number(event.target.value);
-    let newmonth = currentMonth;
-    yearchanged(newYear);
+
     dispatch(
       activeDateCalendarAction.setActiveDateCalendar([currentMonth, newYear])
     );

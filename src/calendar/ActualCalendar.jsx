@@ -1,36 +1,70 @@
 import React from "react";
 import Datebox from "./Datebox";
 import { useSelector } from "react-redux";
+import { nepaliDateData } from "../data/AllYearData";
 
 const ActualCalendar = () => {
-  let d;
   let activeMonth = false;
   // necessary data calculation
   const activeDate = useSelector((store) => store.activeDateCalendar);
 
-  const calendarData = useSelector((store) => store.calendarData);
+  // const calendarData = useSelector((store) => store.calendarData);
 
   const todaysDate = useSelector((store) => store.todaysDate);
-  if (activeDate === null || calendarData === null) {
+  if (activeDate === null) {
     return <></>;
   }
-
-  // setting starting day and number of days for calander
-  let c = activeDate[0];
-  c < 10 ? (d = "0" + c.toString()) : (d = c.toString());
-
-  let sday = calendarData[d];
-  let a = sday[0]["week_day"];
-
-  let startday = -a - 1;
-  let totaldays = Object.entries(sday).length;
-
   let i = 1;
 
   if (activeDate[0] === todaysDate.month && activeDate[1] === todaysDate.year) {
     activeMonth = true;
   }
 
+  // setting starting day and number of days for calander
+  const firstday2080 = 5;
+  let sMonth = activeDate[0];
+  let sYear = activeDate[1];
+
+  let sYearFirstDay;
+  let diffyearsum = firstday2080;
+  if (sYear === 2080) {
+    sYearFirstDay = 5;
+  } else if (sYear > 2080) {
+    let diff = sYear - 2080;
+    let refyear = 2080;
+    for (let j = 0; j < diff; j++) {
+      refyear = refyear + 1;
+
+      refyear % 4 == 2
+        ? (diffyearsum = diffyearsum + 2)
+        : (diffyearsum = diffyearsum + 1);
+    }
+
+    sYearFirstDay = diffyearsum % 7;
+  } else if (sYear < 2080);
+  {
+    let diff = 2080 - sYear;
+    let refyear = 2080;
+    for (let j = 0; j < diff; j++) {
+      refyear = refyear - 1;
+      refyear % 4 == 1
+        ? (diffyearsum = diffyearsum - 2)
+        : (diffyearsum = diffyearsum - 1);
+    }
+
+    diffyearsum = diffyearsum % 7;
+    if (diffyearsum < 0) {
+      diffyearsum = diffyearsum + 7;
+    }
+    sYearFirstDay = diffyearsum;
+  }
+
+  console.log(sYearFirstDay);
+
+  let a = 0;
+
+  let startday = -a - 1;
+  let totaldays = 30;
   // end of setting starting date
 
   // calculation box
@@ -60,7 +94,6 @@ const ActualCalendar = () => {
                   startday={startday}
                   i={i}
                   totaldays={totaldays}
-                  data={sday}
                   cday={todaysDate.day}
                   activeMonth={activeMonth}
                 />
